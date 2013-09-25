@@ -52,10 +52,13 @@
     };
 
     on_resize = function() {
-      var canvas, height, width;
+      var canvas, control_width, controls, height, width;
       canvas = document.getElementById('board');
+      controls = document.getElementById('controls');
       height = window.innerHeight;
       width = window.innerWidth;
+      control_width = (width - 314) / 2;
+      controls.style.margin = "0px auto auto " + control_width;
       width = Math.floor(height * 0.8);
       height -= width;
       canvas.height = width;
@@ -143,21 +146,19 @@
       len = this.colors.length;
       control = document.createElement('ul');
       control.id = 'controls';
-      control.style.cssText = "margin: 0px auto;width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;";
+      width = window.innerWidth - 314;
+      width /= 2;
+      control.style.cssText = "margin: 0px auto auto " + width + ";width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;";
       for (i = _i = 0; 0 <= len ? _i < len : _i > len; i = 0 <= len ? ++_i : --_i) {
         new_html = "<li class='color' id='" + i + "' style='background-color:" + this.colors[i] + ";color:" + this.colors[i] + ";'></li>";
         new_html += '';
         control.innerHTML += new_html;
       }
       document.body.appendChild(control);
-      width = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
-      width = width / 5;
       _ref = control.children;
       _results = [];
       for (_j = 0, _len = _ref.length; _j < _len; _j++) {
         child = _ref[_j];
-        child.style.width = width + 'px';
-        child.style.height = width + 'px';
         _results.push(child.addEventListener('click', attach_to_child, false));
       }
       return _results;

@@ -41,8 +41,11 @@ class bcolor
 		height = window.innerHeight
 		width = window.innerWidth
 
-		control_width = (width - 314) / 2
-		controls.style.margin = "0px auto auto " + control_width
+		control_width = (width * 0.8) / 5
+		controls.style.margin = "10px auto auto " + (width * 0.1) + "px"
+
+		for child in controls.children
+			child.style.width = control_width + 'px'
 
 		width = Math.floor height * 0.8
 		height -= width
@@ -126,9 +129,9 @@ class bcolor
 		
 		control = document.createElement 'ul'
 		control.id = 'controls'
-		width = window.innerWidth - 314
-		width /= 2
-		control.style.cssText = "margin: 0px auto auto " + width + ";width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;"
+	
+		width = (window.innerWidth - 314) / 2
+		control.style.cssText = "margin: 10px auto auto " + width + ";width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;"
 
 		for i in [0...len]
 			new_html = "<li class='color' id='"+i+"' style='background-color:" + @colors[i] + ";color:" + @colors[i] + ";'></li>"
@@ -137,9 +140,14 @@ class bcolor
 			control.innerHTML += new_html
 
 		document.body.appendChild control
-		#control.style.margin-left = width
+
+		control = document.getElementById 'controls'
+		width = (window.innerWidth * 0.8) / 5
+		control.style.margin = '10px auto auto ' + (window.innerWidth * 0.1) + 'px'
 
 		for child in control.children
+			child.style.width = width + 'px'
+			#child.style.height = height + 'px'
 			child.addEventListener 'click', attach_to_child , false
 
 

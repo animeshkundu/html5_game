@@ -41,11 +41,14 @@ class bcolor
 		height = window.innerHeight
 		width = window.innerWidth
 
-		control_width = (width * 0.8) / 5
-		controls.style.margin = "10px auto auto " + (width * 0.1) + "px"
+		control_width = if height < width then height else width
+		control_width *= 0.8
+		controls.style.margin = "10px auto auto " + (width - control_width)/2 + "px"
+		control_width = control_width / 5
 
 		for child in controls.children
 			child.style.width = control_width + 'px'
+			child.style.height = control_width + 'px'
 
 		width = Math.floor height * 0.8
 		height -= width
@@ -142,12 +145,16 @@ class bcolor
 		document.body.appendChild control
 
 		control = document.getElementById 'controls'
-		width = (window.innerWidth * 0.8) / 5
-		control.style.margin = '10px auto auto ' + (window.innerWidth * 0.1) + 'px'
+		width = if window.innerWidth < window.innerHeight then window.innerWidth else window.innerHeight
+
+		width *= 0.8
+		control.style.margin = '10px auto auto ' + (window.innerWidth - width)/2 + 'px'
+
+		width /= 5
 
 		for child in control.children
 			child.style.width = width + 'px'
-			#child.style.height = height + 'px'
+			child.style.height = width + 'px'
 			child.addEventListener 'click', attach_to_child , false
 
 

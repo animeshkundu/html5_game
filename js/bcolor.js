@@ -57,12 +57,15 @@
       controls = document.getElementById('controls');
       height = window.innerHeight;
       width = window.innerWidth;
-      control_width = (width * 0.8) / 5;
-      controls.style.margin = "10px auto auto " + (width * 0.1) + "px";
+      control_width = height < width ? height : width;
+      control_width *= 0.8;
+      controls.style.margin = "10px auto auto " + (width - control_width) / 2 + "px";
+      control_width = control_width / 5;
       _ref = controls.children;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         child = _ref[_i];
         child.style.width = control_width + 'px';
+        child.style.height = control_width + 'px';
       }
       width = Math.floor(height * 0.8);
       height -= width;
@@ -160,13 +163,16 @@
       }
       document.body.appendChild(control);
       control = document.getElementById('controls');
-      width = (window.innerWidth * 0.8) / 5;
-      control.style.margin = '10px auto auto ' + (window.innerWidth * 0.1) + 'px';
+      width = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+      width *= 0.8;
+      control.style.margin = '10px auto auto ' + (window.innerWidth - width) / 2 + 'px';
+      width /= 5;
       _ref = control.children;
       _results = [];
       for (_j = 0, _len = _ref.length; _j < _len; _j++) {
         child = _ref[_j];
         child.style.width = width + 'px';
+        child.style.height = width + 'px';
         _results.push(child.addEventListener('click', attach_to_child, false));
       }
       return _results;

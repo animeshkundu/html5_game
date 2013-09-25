@@ -158,8 +158,7 @@
           }
         }
       }
-      this.update_colors(color);
-      return this.draw_grid();
+      return this.update_colors(color);
     };
 
     bcolor.prototype.field_is_color = function(color, row, column) {
@@ -211,6 +210,7 @@
         for (column = _j = 0, _ref1 = this.number_of_columns; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; column = 0 <= _ref1 ? ++_j : --_j) {
           if (this.board[row][column].player === this.player) {
             this.board[row][column].color = this.user_color;
+            this.draw_cell(this.board[row][column]);
             player_rects++;
           }
         }

@@ -128,7 +128,7 @@ class bcolor
 					@take_possession_of color, row, column
 
 		@update_colors color
-		@draw_grid()
+		#@draw_grid()
 
 	field_is_color: (color, row, column) ->
 		#console.log 'Field is color : color = ' + color + ' row = ' + row + ' column = ' + column
@@ -180,6 +180,7 @@ class bcolor
 				if @board[row][column].player == @player
 					#console.log 'Update board : row = ' + row + ' column = ' + column
 					@board[row][column].color = @user_color
+					@draw_cell @board[row][column]
 					player_rects++
 
 		

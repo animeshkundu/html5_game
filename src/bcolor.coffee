@@ -30,11 +30,42 @@ class bcolor
 
 	create_canvas: ->
 		@canvas = document.createElement 'canvas'
+		@canvas.id = 'board'
 		document.body.appendChild @canvas
+		window.onresize = on_resize
+
+	on_resize = ->
+		canvas = document.getElementById 'board'
+
+		height = window.innerHeight
+		width = window.innerWidth
+
+		width = Math.floor height * 0.8
+		height -= width
+
+		canvas.height = width
+		canvas.width = width
+
+		window.gamex.cell_size = width / window.gamex.number_of_rows
+		window.gamex.create_drawing_context()
+		window.gamex.draw_grid()
+
 
 	resize_canvas: ->
-		@canvas.height = @cell_size * @number_of_rows
-		@canvas.width = @cell_size * @number_of_columns
+		#@canvas.height = @cell_size * @number_of_rows
+		#@canvas.width = @cell_size * @number_of_columns
+
+		height = window.innerHeight
+		width = window.innerWidth
+
+		width = Math.floor height * 0.8
+		height -= width
+
+		@canvas.height = width
+		@canvas.width = width
+
+		@cell_size = width / @number_of_rows
+		@number_of_columns = @number_of_rows
 
 	create_drawing_context: ->
 		@drawing_context = @canvas.getContext '2d'
@@ -55,7 +86,7 @@ class bcolor
 		@board[0][0].color = @user_color
 		@draw_grid()
 		@show_controls()
-		#console.log(@board)
+		console.log(@board)
 	
 		
 	seed: (row, column) ->
@@ -100,7 +131,12 @@ class bcolor
 
 		document.body.appendChild control
 
+		width = if window.innerWidth < window.innerHeight then window.innerWidth else window.innerHeight
+		width = width / 5
+
 		for child in control.children
+			child.style.width = width + 'px'
+			child.style.height = width + 'px'
 			child.addEventListener 'click', attach_to_child , false
 
 

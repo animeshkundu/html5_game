@@ -3,7 +3,7 @@
   var bcolor;
 
   bcolor = (function() {
-    var attach_to_child;
+    var attach_to_child, on_resize;
 
     bcolor.prototype.mode = 0;
 
@@ -46,12 +46,35 @@
 
     bcolor.prototype.create_canvas = function() {
       this.canvas = document.createElement('canvas');
-      return document.body.appendChild(this.canvas);
+      this.canvas.id = 'board';
+      document.body.appendChild(this.canvas);
+      return window.onresize = on_resize;
+    };
+
+    on_resize = function() {
+      var canvas, height, width;
+      canvas = document.getElementById('board');
+      height = window.innerHeight;
+      width = window.innerWidth;
+      width = Math.floor(height * 0.8);
+      height -= width;
+      canvas.height = width;
+      canvas.width = width;
+      window.gamex.cell_size = width / window.gamex.number_of_rows;
+      window.gamex.create_drawing_context();
+      return window.gamex.draw_grid();
     };
 
     bcolor.prototype.resize_canvas = function() {
-      this.canvas.height = this.cell_size * this.number_of_rows;
-      return this.canvas.width = this.cell_size * this.number_of_columns;
+      var height, width;
+      height = window.innerHeight;
+      width = window.innerWidth;
+      width = Math.floor(height * 0.8);
+      height -= width;
+      this.canvas.height = width;
+      this.canvas.width = width;
+      this.cell_size = width / this.number_of_rows;
+      return this.number_of_columns = this.number_of_rows;
     };
 
     bcolor.prototype.create_drawing_context = function() {
@@ -71,7 +94,8 @@
       this.board[0][0].player = this.player;
       this.board[0][0].color = this.user_color;
       this.draw_grid();
-      return this.show_controls();
+      this.show_controls();
+      return console.log(this.board);
     };
 
     bcolor.prototype.seed = function(row, column) {
@@ -114,7 +138,7 @@
     };
 
     bcolor.prototype.show_controls = function() {
-      var child, control, i, len, new_html, _i, _j, _len, _ref, _results;
+      var child, control, i, len, new_html, width, _i, _j, _len, _ref, _results;
       new_html = '';
       len = this.colors.length;
       control = document.createElement('ul');
@@ -126,10 +150,14 @@
         control.innerHTML += new_html;
       }
       document.body.appendChild(control);
+      width = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+      width = width / 5;
       _ref = control.children;
       _results = [];
       for (_j = 0, _len = _ref.length; _j < _len; _j++) {
         child = _ref[_j];
+        child.style.width = width + 'px';
+        child.style.height = width + 'px';
         _results.push(child.addEventListener('click', attach_to_child, false));
       }
       return _results;

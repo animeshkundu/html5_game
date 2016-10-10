@@ -1,4 +1,4 @@
 html5_game
 ==========
 
-Flood Fill
+Classic flood fill game
